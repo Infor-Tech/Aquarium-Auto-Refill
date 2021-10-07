@@ -264,7 +264,7 @@ void display_combined_view()
 
     //error handeling section
     lcd.print(char(3));
-    if (throw_error == "      BRAK      ")
+    if (throw_error == "      NONE      ")
         lcd.print("NO ");
     else
         lcd.print("YES");

@@ -31,7 +31,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 #define INTERFACE_CHOICE_BTN 3
 
 //multitasking setup
-int log_interval = 1000;
+const int log_interval = 1000;
 long log_time = 0;
 long last_time = millis();
 
@@ -42,10 +42,10 @@ int selected_tab = 1;
 String throw_error = "      BRAK      ";
 
 //icons
-byte termometer_ico[8] = {B00100, B01010, B01010, B01110, B01110, B11111, B11111, B01110}; //icon for termometer
-byte water_ico[8] = {B00100, B00100, B01010, B01010, B10001, B10001, B10001, B01110};      //icon for water droplet
-byte clock_ico[8] = {B00000, B01110, B10101, B10111, B10001, B01110, B00000, B00000};      //icon for clock
-byte error_ico[8] = {B11111, B01110, B01110, B00100, B00000, B00100, B01110, B00100};      //icon for error info
+const byte termometer_ico[8] = {B00100, B01010, B01010, B01110, B01110, B11111, B11111, B01110}; //icon for termometer
+const byte water_ico[8] = {B00100, B00100, B01010, B01010, B10001, B10001, B10001, B01110};      //icon for water droplet
+const byte clock_ico[8] = {B00000, B01110, B10101, B10111, B10001, B01110, B00000, B00000};      //icon for clock
+const byte error_ico[8] = {B11111, B01110, B01110, B00100, B00000, B00100, B01110, B00100};      //icon for error info
 
 void setup()
 {
@@ -148,7 +148,7 @@ void display_interface(long elapsed_time)
 void display_water_temperature()
 {
     lcd.setCursor(0, 0);
-    lcd.print("TEMPERATURA WODY");
+    lcd.print("   WATER TEMP   ");
 
     sensors.requestTemperatures(); // Send the command to get temperatures
     float temperature = sensors.getTempCByIndex(0);
@@ -164,28 +164,29 @@ void display_water_temperature()
     else
     {
         lcd.setCursor(0, 1);
-        lcd.print("  BLAD SENSORA  ");
-        throw_error = "BLAD SENSOR TEMP";
+        lcd.print("  SENSOR ERROR  ");
+        throw_error = "TEMP SENSOR ERR ";
     }
 }
 
 //checks water level and displays it on a screen
+//values in an if statment should be changed, cause thay may differ in different enviroments
 void display_water_level()
 {
     int water_lvl = check_water_level();
 
     lcd.setCursor(0, 0);
-    lcd.print("  POZIOM WODY   ");
+    lcd.print("  WATER LEVEL   ");
 
     lcd.setCursor(0, 1);
     if (water_lvl >= 10)
-        lcd.print("   BRAK WODY    ");
+        lcd.print("    NO WATER    ");
     else if (water_lvl >= 7)
-        lcd.print("   MALO WODY    ");
+        lcd.print("LITTLE OF WATER ");
     else if (water_lvl >= 5)
-        lcd.print("  OPTIMUM WODY  ");
+        lcd.print("OPTIMUM OF WATER");
     else
-        lcd.print("   DUZO WODY    ");
+        lcd.print(" LOTS OF WATER  ");
 }
 
 void display_time_and_date()
@@ -236,13 +237,13 @@ void display_combined_view()
     int water_lvl = check_water_level();
     lcd.print(char(1));
     if (water_lvl >= 10)
-        lcd.print("BRAK  ");
+        lcd.print("NONE  ");
     else if (water_lvl >= 7)
-        lcd.print("MALO  ");
+        lcd.print("LITTLE");
     else if (water_lvl >= 5)
         lcd.print("OPTIM ");
     else
-        lcd.print("DUZO  ");
+        lcd.print("LOTS  ");
 
     //temperature section
     sensors.requestTemperatures();
@@ -264,15 +265,15 @@ void display_combined_view()
     //error handeling section
     lcd.print(char(3));
     if (throw_error == "      BRAK      ")
-        lcd.print("NIE");
+        lcd.print("NO ");
     else
-        lcd.print("TAK");
+        lcd.print("YES");
 }
 
 void display_errors()
 {
     lcd.setCursor(0, 0);
-    lcd.print("     BLEDY      ");
+    lcd.print("     ERRORS     ");
     lcd.setCursor(0, 1);
     lcd.print(throw_error);
 }

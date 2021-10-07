@@ -39,7 +39,7 @@ long last_time = millis();
 int selected_tab = 1;
 
 //error handeling
-String throw_error = "      BRAK      ";
+String throw_error = "      NONE      ";
 
 //icons
 const byte termometer_ico[8] = {B00100, B01010, B01010, B01110, B01110, B11111, B11111, B01110}; //icon for termometer

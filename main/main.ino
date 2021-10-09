@@ -11,9 +11,6 @@ DallasTemperature sensors(&oneWire);
 #define MAIN_WATER_LEVEL_SENSOR_TRIG 4
 #define MAIN_WATER_LEVEL_SENSOR_ECHO 5
 
-long duration;
-int distance;
-
 //rtc config
 #include <virtuabotixRTC.h>
 virtuabotixRTC myRTC(13, 12, 11);
@@ -32,8 +29,8 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 //multitasking setup
 const int log_interval = 1000;
-long log_time = 0;
-long last_time = millis();
+unsigned long log_time = 0;
+unsigned long last_time = millis();
 
 //variable used, to define, which tab should be displayed on a screen
 int selected_tab = 1;
@@ -91,9 +88,7 @@ int check_water_level()
     digitalWrite(MAIN_WATER_LEVEL_SENSOR_TRIG, HIGH);
     delayMicroseconds(10);
     digitalWrite(MAIN_WATER_LEVEL_SENSOR_TRIG, LOW);
-
-    duration = pulseIn(MAIN_WATER_LEVEL_SENSOR_ECHO, HIGH);
-    return duration / 58; //distance in cm
+    return pulseIn(MAIN_WATER_LEVEL_SENSOR_ECHO, HIGH) / 58; //distance in cm
 }
 
 void refill_water()

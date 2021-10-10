@@ -1,3 +1,23 @@
+/*  Aquarium refill controler
+ *  
+ *  github repo: https://github.com/Infor-Tech/Aquarium-Auto-Refill/
+ *  
+ *  Parts used in this project:
+ *      - Arduino UNO
+ *      - LCD1602 display with i2c module
+ *      - DS18B20 digital temperature sensor
+ *      - DS1302 RTC module
+ *      - HC-SR04 ultrasonic ranging module
+ *      - 4ch relay
+ *      - pushbutton
+ *      
+ *  fritzing project, diagrams and schematics avaiable
+ *    
+ *  Author: KRYSTIAN SLIWINSKI
+ *  Contact: kskrystiansliwniski@gmail.com
+ *  github: https://github.com/Infor-Tech
+ */
+
 //temperature sensor config
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -81,6 +101,7 @@ void loop()
     refill_water();
 }
 
+//returns a distance between a sensor and water surface
 int check_water_level()
 {
     digitalWrite(MAIN_WATER_LEVEL_SENSOR_TRIG, LOW);
@@ -91,6 +112,7 @@ int check_water_level()
     return pulseIn(MAIN_WATER_LEVEL_SENSOR_ECHO, HIGH) / 58; //distance in cm
 }
 
+//when water level drops below specific level pumps turns on
 void refill_water()
 {
     if (check_water_level() > 5)
@@ -174,6 +196,7 @@ void display_water_level()
     lcd.print("  WATER LEVEL   ");
 
     lcd.setCursor(0, 1);
+    //comparing readings from hc-sr04 with preseted values
     if (water_lvl >= 10)
         lcd.print("    NO WATER    ");
     else if (water_lvl >= 7)

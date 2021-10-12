@@ -146,16 +146,23 @@ void display_interface(long elapsed_time)
     log_time += elapsed_time; //it's used for checking if any logs can be performed
     if (log_time >= log_interval)
     {
-        if (selected_tab == 1)
+        switch (selected_tab)
+        {
+        case 1:
             display_water_temperature();
-        else if (selected_tab == 2)
+            break;
+        case 2:
             display_water_level();
-        else if (selected_tab == 3)
+            break;
+        case 3:
             display_time_and_date();
-        else if (selected_tab == 4)
+            break;
+        case 4:
             display_combined_view();
-        else
+            break;
+        default:
             display_errors();
+        }
 
         log_time -= log_interval;
     }

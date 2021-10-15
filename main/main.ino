@@ -101,7 +101,11 @@ void loop()
     refill_water();
 }
 
-//returns a distance between a sensor and water surface
+
+/**
+ * Checks water level with HC-SR04
+ * @return distance between a sensor and water surface in centimeters
+ */
 int check_water_level()
 {
     digitalWrite(MAIN_WATER_LEVEL_SENSOR_TRIG, LOW);

@@ -59,10 +59,10 @@ int selected_tab = 1;
 String throw_error = "      NONE      ";
 
 //icons
-const byte termometer_ico[8] = {B00100, B01010, B01010, B01110, B01110, B11111, B11111, B01110}; //icon for termometer
-const byte water_ico[8] = {B00100, B00100, B01010, B01010, B10001, B10001, B10001, B01110};      //icon for water droplet
-const byte clock_ico[8] = {B00000, B01110, B10101, B10111, B10001, B01110, B00000, B00000};      //icon for clock
-const byte error_ico[8] = {B11111, B01110, B01110, B00100, B00000, B00100, B01110, B00100};      //icon for error info
+byte termometer_ico[8] = {B00100, B01010, B01010, B01110, B01110, B11111, B11111, B01110}; //icon for termometer
+byte water_ico[8] = {B00100, B00100, B01010, B01010, B10001, B10001, B10001, B01110};      //icon for water droplet
+byte clock_ico[8] = {B00000, B01110, B10101, B10111, B10001, B01110, B00000, B00000};      //icon for clock
+byte error_ico[8] = {B11111, B01110, B01110, B00100, B00000, B00100, B01110, B00100};      //icon for error info
 
 void setup()
 {
@@ -259,7 +259,7 @@ void display_combined_view()
         lcd.print(value);
         lcd.print(":");
     }
-    lcd.setCursor(6, 0);
+    lcd.setCursor(6, 0);    //6 cause we need to remove last ":" sign from last iteration of line 253
     lcd.print("   ");
 
     //water level section

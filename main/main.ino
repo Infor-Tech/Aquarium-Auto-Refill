@@ -14,7 +14,7 @@
  *  fritzing project, diagrams and schematics avaiable
  *    
  *  Author: KRYSTIAN SLIWINSKI
- *  Contact: kskrystiansliwniski@gmail.com
+ *  Contact: k.sliwinski@protonmail.com
  *  github: https://github.com/Infor-Tech
  */
 
@@ -33,7 +33,7 @@ DallasTemperature sensors(&oneWire);
 
 //rtc config
 #include <virtuabotixRTC.h>
-virtuabotixRTC myRTC(13, 12, 11);
+virtuabotixRTC clock(13, 12, 11);
 
 //pump
 #define RELAY_PUMP_PIN 6
@@ -48,12 +48,12 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 #define INTERFACE_CHOICE_BTN 3
 
 //multitasking setup
-const int log_interval = 1000;
+const unsigned int log_interval = 1000;
 unsigned long log_time = 0;
 unsigned long last_time = millis();
 
 //variable used, to define, which tab should be displayed on a screen
-int selected_tab = 1;
+byte selected_tab = 1;
 
 //error handeling
 String throw_error = "      NONE      ";
@@ -132,10 +132,7 @@ void interface_choice()
 
     if (!digitalRead(INTERFACE_CHOICE_BTN))
     {
-        if (selected_tab < 5)
-            selected_tab++;
-        else
-            selected_tab = 1;
+        selected_tab = selected_tab < 5 ? selected_tab++ : 1;
 
         while (!digitalRead(INTERFACE_CHOICE_BTN))
         {
@@ -220,9 +217,9 @@ void display_water_level()
 
 void display_time_and_date()
 {
-    myRTC.updateTime();
-    int date[2] = {myRTC.dayofmonth, myRTC.month};
-    int time[3] = {myRTC.hours, myRTC.minutes, myRTC.seconds};
+    clock.updateTime();
+    int date[2] = {clock.dayofmonth, clock.month};
+    int time[3] = {clock.hours, clock.minutes, clock.seconds};
     lcd.setCursor(0, 0);
     for (int value : date)
     {
@@ -231,7 +228,7 @@ void display_time_and_date()
         lcd.print(value);
         lcd.print("/");
     }
-    lcd.print(myRTC.year);
+    lcd.print(clock.year);
     lcd.print("      ");
     lcd.setCursor(0, 1);
     for (int value : time)
@@ -248,8 +245,8 @@ void display_time_and_date()
 void display_combined_view()
 {
     //time section
-    myRTC.updateTime();
-    int time[2] = {myRTC.hours, myRTC.minutes};
+    clock.updateTime();
+    int time[2] = {clock.hours, clock.minutes};
     lcd.setCursor(0, 0);
     lcd.print(char(2));
     for (int value : time)

@@ -7,11 +7,12 @@ ___
 ### What such device should do:
 
 - Checks water level
-  - If water level is lower than it should be, controller turns on a pump
+  - If water level is lower than specified, controller turns on a pump
+  - When pump runs for longer than specified, it is cut off
 - Displays time and date
   - In future, this will be used for controlling lighting of the aquarium
     - At a specific time controller will turn on specific channels
-- Checks temperature of water
+- Checks temperature of the water
 
 ___
 

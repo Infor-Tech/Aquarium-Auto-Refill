@@ -43,3 +43,16 @@ If you don't have Fritzing and you can't open diagrams and schematics here are s
 ![image](https://user-images.githubusercontent.com/72706877/136063962-b90599fa-fd89-4719-af90-b5a996fdf0fb.png)
 
 ![image](https://user-images.githubusercontent.com/72706877/136064160-4660c9ff-0716-4548-9416-1d21823090ca.png)
+
+___
+
+### Completed project
+
+Below you can see device build using this code and diagrams. Error on a first photo comes from a broken thermometer.
+
+![img](https://cdn.discordapp.com/attachments/762363823105507401/945032689323495515/20220220_144636.jpg)
+
+![img](https://user-images.githubusercontent.com/72706877/154859832-d77544d9-9bfb-4a30-ba9d-e0eadcfbfe6a.jpg)
+
+![img](https://cdn.discordapp.com/attachments/762363823105507401/945032711595249664/20220220_150927.jpg)
+

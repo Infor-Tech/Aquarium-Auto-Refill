@@ -127,22 +127,25 @@ int check_water_level()
 void refill_water()
 {
     byte water_lvl = check_water_level();
-    if (!pump_error && water_lvl > PUMP_TRIGGER)
+    if (!pump_error && water_lvl > PUMP_TARGET)
     {
-        if (!is_pump_running_since_set)
+        if (water_lvl > PUMP_TRIGGER)
         {
-            pump_running_since = millis();
-            is_pump_running_since_set = true;
-        }
-        else if (millis() - pump_running_since < PUMP_CUTOFF)
-            digitalWrite(RELAY_PUMP_PIN, LOW); // safety check, pump cannot run for longer than specified in PUMP_CUTOFF
-        else
-        {
-            throw_error = (throw_error == "TEMP SENSOR ERR ") ? "TEMP & LVL ERROR" : "LVL SENSOR ERROR";
-            pump_error = true;
+            if (!is_pump_running_since_set)
+            {
+                pump_running_since = millis();
+                is_pump_running_since_set = true;
+            }
+            else if (millis() - pump_running_since < PUMP_CUTOFF)
+                digitalWrite(RELAY_PUMP_PIN, LOW); // safety check, pump cannot run for longer than specified in PUMP_CUTOFF
+            else
+            {
+                throw_error = (throw_error == "TEMP SENSOR ERR ") ? "TEMP & LVL ERROR" : "LVL SENSOR ERROR";
+                pump_error = true;
+            }
         }
     }
-    else if (pump_error || water_lvl <= PUMP_TARGET)
+    else
     {
         digitalWrite(RELAY_PUMP_PIN, HIGH);
         is_pump_running_since_set = false;
